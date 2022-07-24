@@ -1,15 +1,22 @@
 class Solution {
     public int longestCommonSubsequence(String text1, String text2) {
-         int n = text1.length();
-        int m = text2.length();
-        int[][] ap = new int[n + 1][m + 1];
-        for (int i = 1; i <= n; i++) {
-            for (int j = 1; j <= m; j++) {
-                if (text1.charAt(i -1) == text2.charAt(j - 1)) 
-                    ap[i][j] = 1 + ap[i - 1][j - 1];
-                else ap[i][j] = Math.max(ap[i - 1][j], ap[i][j - 1]);
-            }
+        int[][] ap = new int[text1.length()][text2.length()];
+        for(int[] each : ap)
+            Arrays.fill(each, -1);
+        
+        return lcs(text1, text2, 0, 0, ap);
+    }
+    
+    private int lcs(String s1, String s2, int n, int m, int[][] ap) {
+        if(n == s1.length() || m == s2.length()) return 0;
+        if(ap[n][m] != -1)return ap[n][m];
+        int result;
+        if(s1.charAt(n) == s2.charAt(m)) {
+            result =  1 + lcs(s1, s2, n + 1, m + 1, ap);
+        } else {
+            result = Math.max(lcs(s1, s2, n, m + 1, ap), lcs(s1, s2, n + 1, m, ap));
         }
-        return ap[n][m];
+        ap[n][m] = result;
+        return result;
     }
 }
