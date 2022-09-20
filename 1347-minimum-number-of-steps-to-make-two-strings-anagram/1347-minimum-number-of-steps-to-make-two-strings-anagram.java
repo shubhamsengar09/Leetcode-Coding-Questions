@@ -1,14 +1,15 @@
 class Solution {
     public int minSteps(String s, String t) {
-         int[] num = new int[26];
-        for (int i=0; i<s.length(); i++) {
-            num[s.charAt(i) - 'a']++;
-            num[t.charAt(i) - 'a']--;
+        int n =0;
+        Map<Character,Integer>mp = new HashMap<>();
+        for(char c : s.toCharArray()){
+            mp.put(c,mp.getOrDefault(c,0)+1);
         }
-        int res = 0;
-        for (int i : num) {
-            if (i > 0) res += i;
+        for(int i =0;i<t.length();i++){
+            char c = t.charAt(i);
+            if(mp.containsKey(c) && mp.get(c)>0) mp.put(c,mp.get(c)-1);
+            else n++;
         }
-        return res;
+        return n;
     }
 }
