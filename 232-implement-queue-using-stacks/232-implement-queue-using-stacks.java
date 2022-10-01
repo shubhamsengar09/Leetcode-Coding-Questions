@@ -1,26 +1,25 @@
 class MyQueue {
 
-  final LinkedList<Integer> list;
-
-    public MyQueue() {
-        list = new LinkedList<>();
-    }
-
+    Stack<Integer> queue = new Stack<Integer>();
+    Stack<Integer> temp = new Stack<Integer>();
+    
     public void push(int x) {
-        list.add(x);
+        while(!queue.empty())
+            temp.push(queue.pop());
+        queue.push(x);
+        while(!temp.empty())
+            queue.push(temp.pop());
     }
-
+    
     public int pop() {
-        Integer first = list.getFirst();
-        list.removeFirst();
-        return first;
+        return queue.pop();
     }
-
+    
     public int peek() {
-        return list.getFirst();
+        return queue.peek();
     }
-
+    
     public boolean empty() {
-        return list.isEmpty();
+        return queue.isEmpty();
     }
 }
